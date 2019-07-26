@@ -1,0 +1,24 @@
+{
+  "name": "file-search",
+  "version": "1.0.0",
+  "description": "A utility to search a text within file(s).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sankalpkataria/file-search.git"
+  },
+  "keywords": [
+    "file-search",
+    "nodejs",
+    "searching"
+  ],
+  "author": "'sankalp",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sankalpkataria/file-search/issues"
+  },
+  "homepage": "https://github.com/sankalpkataria/file-search#readme"
+}

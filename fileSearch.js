@@ -1,7 +1,7 @@
 const {createReadStream} = require("fs");
 const {join} = require("path");
 
-const searchData = (data, textToSearch) => {
+const search = (data, textToSearch) => {
     return data.includes(textToSearch);
 };
 
@@ -9,7 +9,7 @@ const readFileAndSearch = (filePath, textToSearch) => {
     return new Promise((resolve, reject) => {
         const readStream = createReadStream(filePath, {encoding: "utf-8"});
         readStream.on("data", data => {
-            const result = searchData(data, textToSearch);
+            const result = search(data, textToSearch);
             if (result) {
                 resolve(filePath);
             }
@@ -24,4 +24,4 @@ const readFileAndSearch = (filePath, textToSearch) => {
 };
 
 module.exports.readFileAndSearch = readFileAndSearch;
-module.exports.searchData = searchData;
+module.exports.search = search;

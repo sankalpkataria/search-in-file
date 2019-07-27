@@ -1,7 +1,12 @@
 const {statSync, existsSync} = require("fs");
 const {getFilesFromDir} = require("./getFilesFromDir.js");
-const {readFileAndSearch} = require("./fileSearch.js");
+const {readFileAndSearch, search} = require("./fileSearch.js");
 
+/**
+ * @param {string[]} paths file locations to search
+ * @param {string} textToSearch Text to search in files
+ * @param {object} options Various options for file search
+ */
 const fileSearch = (paths, textToSearch, options) => {
     if (!paths || !paths.length) return Promise.reject("File path is required");
     if (!(paths instanceof Array)) return Promise.reject("Path must be an array.");
@@ -25,5 +30,6 @@ const fileSearch = (paths, textToSearch, options) => {
     return Promise.all(promises).then(files => files.filter(file => !!file));
 };
 
-module.exports.getFilesFromDir = getFilesFromDir;
 module.exports.fileSearch = fileSearch;
+module.exports.getFilesFromDir = getFilesFromDir;
+module.exports.search = search;

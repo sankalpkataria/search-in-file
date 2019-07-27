@@ -11,7 +11,7 @@ const readFileAndSearch = (filePath, textToSearch) => {
         readStream.on("data", data => {
             const result = searchData(data, textToSearch);
             if (result) {
-                process.stdout.write(filePath, "utf-8");
+                resolve(filePath);
             }
             readStream.close();
         });

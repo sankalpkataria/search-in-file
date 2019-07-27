@@ -22,7 +22,7 @@ const fileSearch = (paths, textToSearch, options) => {
 
     if (!allFiles.length) return Promise.reject(`No file to search. Either there are no files or files are empty`);
     const promises = allFiles.map(path => readFileAndSearch(path, textToSearch, options));
-    return Promise.all(promises);
+    return Promise.all(promises).then(files => files.filter(file => !!file));
 };
 
 module.exports.getFilesFromDir = getFilesFromDir;

@@ -11,11 +11,12 @@
     "url": "git+https://github.com/sankalpkataria/file-search.git"
   },
   "keywords": [
-    "file-search",
-    "nodejs",
-    "searching"
+    "file search",
+    "file system",
+    "searching",
+    "nodejs"
   ],
-  "author": "'sankalp",
+  "author": "Sankalp Kataria",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/sankalpkataria/file-search/issues"

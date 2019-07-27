@@ -1,8 +1,8 @@
-const {createReadStream, statSync, existsSync, readdirSync} = require("fs");
+const {statSync, existsSync} = require("fs");
 const {getFilesFromDir} = require("./getFilesFromDir.js");
 const {readFileAndSearch} = require("./fileSearch.js");
 
-function fileSearch(paths, textToSearch, options) {
+const fileSearch = (paths, textToSearch, options) => {
     if (!paths || !paths.length) return Promise.reject("File path is required");
     if (!(paths instanceof Array)) return Promise.reject("Path must be an array.");
     if (!options || !(options instanceof Object)) {
@@ -21,12 +21,9 @@ function fileSearch(paths, textToSearch, options) {
     }, []);
 
     if (!allFiles.length) return Promise.reject(`No file to search. Either there are no files or files are empty`);
-
-    const promises = allFiles.map(function(path) {
-        return readFileAndSearch(path, textToSearch, options);
-    });
+    const promises = allFiles.map(path => readFileAndSearch(path, textToSearch, options));
     return Promise.all(promises);
-}
+};
 
 module.exports.getFilesFromDir = getFilesFromDir;
 module.exports.fileSearch = fileSearch;

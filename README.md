@@ -36,3 +36,4 @@ A utility to search a text within file(s).
 * `words`: Searches for the exact word. Default `false`
 * `ignoreCase`: Case in-sensitive search. Default `false`
 * `isRegex`: Searches for the regular expresion. Default `false`
+* `searchResults`: Type of search results to get. `lineNo` to get line with line number that contains given search text.  Default `filePaths`

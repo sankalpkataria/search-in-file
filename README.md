@@ -32,4 +32,10 @@ A utility to search a text within file(s).
 > Return value: true, if text is present in given data. Else false
 
 ## Available Options
-* `recursive`: Search recursively in all sub-directories and files. Default `false`
+* `recursive`: Searches recursively in all sub-directories and files. Default `false`
+* `words`: Searches for the exact word. Default `false`
+* `ignoreCase`: Case in-sensitive search. Default `false`
+* `isRegex`: Searches for the regular expresion. Default `false`
+* `ignoreDir`: Ignore the specified directories/path while searching. Default `[]`
+* `fileMask`: Only search in files with given extension. Default `null`
+* `searchResults`: Type of search results to get. `lineNo` to get line with line number that contains given search text.  Default `filePaths`

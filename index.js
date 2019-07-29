@@ -25,6 +25,19 @@ const fileSearch = (paths, textToSearch, options) => {
         return result.concat(dirFiles);
     }, []);
 
+    if (options.ignoreDir && options.ignoreDir.length) {
+        allFiles = allFiles.filter(filePath => !options.ignoreDir.some(path =>
+            path === filePath || filePath.includes(path)));
+    }
+
+    if (options.fileMask) {
+        allFiles = allFiles.filter(filePath => {
+            const filePathParts = filePath.split(".");
+            const fileExt = filePathParts[filePathParts.length - 1];
+            return fileExt === options.fileMask;
+        });
+    }
+
     if (!allFiles.length) return Promise.reject(`No file to search. Either there are no files or files are empty`);
     const promises = allFiles.map(path => readFileAndSearch(path, textToSearch, options));
     return Promise.all(promises).then(files => files.filter(file => !!file));

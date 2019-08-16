@@ -31,8 +31,8 @@ const search = (data, textToSearch, options) => {
         return searchForLineNos(data, textToSearch, true, regexOptions);
     } else {
         if (options.ignoreCase) {
-            data = data.toLowercase();
-            textToSearch = textToSearch.toLowercase();
+            data = data.toLowerCase();
+            textToSearch = textToSearch.toLowerCase();
         }
         if (!options.searchResults || options.searchResults !== "lineNo") return data.includes(textToSearch);
         // search results must contain line numbers
@@ -46,7 +46,7 @@ const readFileAndSearch = (filePath, textToSearch, options) => {
         readStream.on("data", data => {
             const result = search(data, textToSearch, options);
             if (result) {
-                if (options.searchResults === "lineNo") return resolve({filePath, lines: result});
+                if (options.searchResults === "lineNo") return resolve({filePath, lines: JSON.stringify(result)});
                 resolve(filePath);
                 readStream.close();
             }

@@ -1,4 +1,4 @@
-const {statSync, readdirSync} = require("fs");
+const {statP, readdirP} = require("./fsPromisified");
 const {join} = require("path");
 
 /**
@@ -7,33 +7,36 @@ const {join} = require("path");
  * @param {boolean} omitEmpty A flag to omit empty files from result.
  */
 const getFilesFromDir = (dirPath, recursive, omitEmpty) => {
-    if(!recursive){
-        const fileList = readdirSync(dirPath);
-        return fileList.filter(function(file) {
-            const filePath = join(dirPath, file);
-            const fileStats = statSync(filePath);
-            return fileStats.isDirectory() ? false : omitEmpty ? !!fileStats.size : true;
-        });
-
+    if (!recursive) {
+        return readdirP(dirPath).then(fileList => {
+            const fileStatPromises = fileList.map(file => {
+                const filePath = join(dirPath, file);
+                return statP(filePath).then(fileStat => {
+                    if (fileStat.isDirectory()) return false;
+                    if (omitEmpty) return fileStat.size > 0 ? filePath : false;
+                    return filePath;
+                });
+            });
+            return Promise.all(fileStatPromises).then(files => files.filter(file => file));
+        })
     }
-    const files = [];
-    (function getFilesRecursively(path) {
-        const fileList = readdirSync(path);
-        fileList.forEach(function(file) {
-            const filePath = join(path, file);
-            const fileStats = statSync(filePath);
-            if (fileStats.isDirectory()) {
-                getFilesRecursively(filePath);
-            } else if (omitEmpty) {
-                if(fileStats.size){
-                    files.push(filePath);
-                }
-            } else {
-                files.push(filePath);
-            }
+    let files = [];
+    return (function getFilesRecursively(path) {
+        return readdirP(path).then(fileList => {
+            const fileStatPromises = fileList.map(function (file) {
+                const filePath = join(path, file);
+                return statP(filePath).then(fileStat => {
+                    if (fileStat.isDirectory()) return getFilesRecursively(filePath);
+                    if (omitEmpty) return fileStat.size > 0 ? filePath : false;
+                    return filePath;
+                });
+            });
+            return Promise.all(fileStatPromises).then(filesPaths => {
+                const result = filesPaths.filter(file => file);
+                files = files.concat(result);
+            });
         });
-    })(dirPath);
-    return files;
+    })(dirPath).then(() => files);
 };
 
 module.exports.getFilesFromDir = getFilesFromDir;

@@ -1,17 +1,6 @@
-const {createReadStream} = require("fs");
-const {join} = require("path");
-
-const searchForLineNos = (data, textToSearch, isRegex, regexOptions) => {
-    const dataParts = data.split("\n");
-    const foundLines = dataParts.filter(d => isRegex ?
-        new RegExp(textToSearch, regexOptions).test(d) :
-        d.includes(textToSearch));
-    const result = foundLines.filter(d => d.length).map(line => ({
-        line,
-        lineNo: dataParts.indexOf(line) + 1
-    }));
-    return result.length ? result : false;
-};
+const { createReadStream } = require("fs");
+const { once } = require('events');
+const { createInterface } = require('readline');
 
 const search = (data, textToSearch, options) => {
     if (!options || !(options instanceof Object)) {
@@ -26,36 +15,58 @@ const search = (data, textToSearch, options) => {
         if (options.ignoreCase) {
             regexOptions += "i";
         }
-        if (!options.searchResults || options.searchResults !== "lineNo") return new RegExp(textToSearch, regexOptions).test(data);
-        // search results must contain line numbers
-        return searchForLineNos(data, textToSearch, true, regexOptions);
+        return new RegExp(textToSearch, regexOptions).test(data);
     } else {
         if (options.ignoreCase) {
             data = data.toLowerCase();
             textToSearch = textToSearch.toLowerCase();
         }
-        if (!options.searchResults || options.searchResults !== "lineNo") return data.includes(textToSearch);
-        // search results must contain line numbers
-        return searchForLineNos(data, textToSearch, false);
+        return data.includes(textToSearch);
     }
 };
 
+const searchLineByLine = (filePath, textToSearch, options) => {
+    const results = [];
+    const stream = createReadStream(filePath, {encoding: "utf-8"});
+    const lineReader = createInterface({
+        input: stream
+    });
+
+    lineReader.on('line', (line) => {
+        if(search(line, textToSearch, options)) {
+            results.push({ filePath, line });
+        }
+    });
+
+    return once(lineReader, 'close').then(function () {
+        stream.close();
+        return results;
+    });
+}
+
 const readFileAndSearch = (filePath, textToSearch, options) => {
     return new Promise((resolve, reject) => {
-        const readStream = createReadStream(filePath, {encoding: "utf-8"});
-        readStream.on("data", data => {
-            const result = search(data, textToSearch, options);
-            if (result) {
-                if (options.searchResults === "lineNo") return resolve({filePath, lines: JSON.stringify(result)});
-                resolve(filePath);
+        if (!options.searchResults || options.searchResults !== "lineNo") {
+            const readStream = createReadStream(filePath, {encoding: "utf-8"});
+            readStream.on("data", data => {
+                const result = search(data, textToSearch, options);
+                if (result) {
+                    resolve(filePath);
+                    readStream.close();
+                }
+            });
+            readStream.on("error", err => {
                 readStream.close();
-            }
-        });
-        readStream.on("error", err => {
-            readStream.close();
-            reject(err);
-        });
-        readStream.on("close", resolve);
+                reject(err);
+            });
+            readStream.on("close", resolve);
+        } else {
+            // search results must contain line numbers
+            searchLineByLine(filePath, textToSearch, options).then(function (results) {
+                resolve(results);
+            });
+        }
+        
     });
 };
 

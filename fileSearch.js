@@ -32,9 +32,12 @@ const searchLineByLine = (filePath, textToSearch, options) => {
         input: stream
     });
 
+    let lineNo = 0;
+
     lineReader.on('line', (line) => {
+        lineNo++;
         if(search(line, textToSearch, options)) {
-            results.push({ filePath, line });
+            results.push({ filePath, line: line.trim(), lineNo });
         }
     });
 

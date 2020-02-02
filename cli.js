@@ -63,7 +63,18 @@ const options = {
 };
 
 fileSearch(paths, textToSearch, options).then(res => {
-    console.table(res);
+    if (program.searchResults === "lineNo") {
+        res.forEach( r => {
+            if (r.length) {
+                const [ firstElem ] = r;
+                console.log();
+                console.log(`filePath: ${firstElem.filePath}`);
+                console.table(r, ["line", "lineNo"]);
+            }
+        });
+    } else {
+        console.table(res);
+    }
 }).catch(err => {
     console.log(err);
 });

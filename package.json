@@ -20,7 +20,7 @@
     "nodejs"
   ],
   "author": "Sankalp Kataria",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/sankalpkataria/file-search/issues"
   },

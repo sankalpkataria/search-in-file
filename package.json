@@ -1,10 +1,13 @@
 {
   "name": "file-search",
   "version": "1.0.0",
-  "description": "A utility to search a text within file(s).",
+  "description": "Includes utility methods and command to search text within file(s).",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "file-search": "./cli.js"
   },
   "repository": {
     "type": "git",
@@ -17,9 +20,12 @@
     "nodejs"
   ],
   "author": "Sankalp Kataria",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/sankalpkataria/file-search/issues"
   },
-  "homepage": "https://github.com/sankalpkataria/file-search#readme"
+  "homepage": "https://github.com/sankalpkataria/file-search#readme",
+  "dependencies": {
+    "commander": "^4.1.0"
+  }
 }

@@ -1,10 +1,10 @@
-# Search In Files
+# Search In File
 
 Includes utility methods and command to search text within file(s). 
 
 ## Installation
 ```
-npm install search-in-files
+npm install search-in-file
 ```
 
 ## Usage
@@ -13,11 +13,11 @@ To use this as a command line tool install this package globally using `-g` comm
 
 Now, run command
 ``` 
-search-in-files <text-to-search> 
+search-in-file <text-to-search> 
 ```
 For example, 
 ```
-search-in-files hello
+search-in-file hello
 ```
 This will search for text `"hello"` in all the files from a directory where the command is run.
 
@@ -44,42 +44,42 @@ There are the following flags available with this commands:
 ## Examples
 
 ```
-search-in-files hello -p some-file-path
+search-in-file hello -p some-file-path
 ```
 will search for text having `hello` in the specified file.
 
 ```
-search-in-files hello -p some-dir-path
+search-in-file hello -p some-dir-path
 ```
 will search for text having `hello` in all the files in specified directory.
 
 ```
-search-in-files hello -p some-dir-path -r
+search-in-file hello -p some-dir-path -r
 ```
 will search for text having `hello` in all the files in all subdirectories of the specified directory.
 
 ```
-search-in-files hello -p some-dir-path -p some-other-dir-path
+search-in-file hello -p some-dir-path -p some-other-dir-path
 ```
 will search for text having `hello` in all the files in both the directories.
 
 ```
-search-in-files hello -p some-dir-path -e dir-to-exclude
+search-in-file hello -p some-dir-path -e dir-to-exclude
 ```
 will search for text having `hello` in all the files in specified directory except the dir-to-exclude directory.
 
 ```
-search-in-files hello -p some-dir-path -w
+search-in-file hello -p some-dir-path -w
 ```
 will search for the exact word `hello`.
 
 ```
-search-in-files hello -p some-dir-path -w -i -f .txt
+search-in-file hello -p some-dir-path -w -i -f .txt
 ```
 will search for the exact word `hello` (ignoring case) in all the with extension `".txt"` in the specified directory
 
 ```
-search-in-files hello -p some-dir-path -w -s lineNo
+search-in-file hello -p some-dir-path -w -s lineNo
 ```
 will search for the exact word `hello` and output the files along with the line number where the text is found.
 

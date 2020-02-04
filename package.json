@@ -1,5 +1,5 @@
 {
-  "name": "search-in-files",
+  "name": "search-in-file",
   "version": "1.0.0",
   "description": "Includes utility methods and command to search text within file(s).",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "search-in-files": "./cli.js"
+    "search-in-file": "./cli.js"
   },
   "repository": {
     "type": "git",

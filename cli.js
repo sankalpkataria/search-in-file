@@ -38,7 +38,7 @@ if (!program.textToSearch) {
     console.log('For example:');
     console.log(`\t${program.name()} hello`);
     console.log();
-    console.log(`Run file-search --help to see all options.`);
+    console.log(`Run search-in-files --help to see all options.`);
     process.exit(1);
 }
 
@@ -48,7 +48,7 @@ const paths = !program.path || !program.path.length ? [ __dirname ] : program.pa
 if (program.searchResults && program.searchResults !== "filePaths" && program.searchResults !== "lineNo") {
     console.log("Invalid value for argument '--search-results'");
     console.log();
-    console.log(`Run file-search --help to see all options.`);
+    console.log(`Run search-in-files --help to see all options.`);
     process.exit(1);
 }
 

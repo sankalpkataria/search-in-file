@@ -1,4 +1,4 @@
-# File Search
+# Search In Files
 
 Includes utility methods and command to search text within file(s). 
 

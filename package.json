@@ -1,6 +1,6 @@
 {
   "name": "search-in-file",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Includes utility methods and command to search text within file(s).",
   "main": "index.js",
   "scripts": {

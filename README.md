@@ -21,6 +21,9 @@ search-in-file hello
 ```
 This will search for text `"hello"` in all the files from a directory where the command is run.
 
+> `search-in-file hello world` will search for text having either `"hello"` or `"world"`. To search for `hello world`, use `search-in-file "hello world"`.
+> I.e. to search for text having more than one word, enclose the text in `quotes`.
+
 There are the following flags available with this commands:
 
 `-p <path>`, `--path <path>` <path> : Path(s) of file/directory to search. Default: Current working directory
@@ -38,8 +41,6 @@ There are the following flags available with this commands:
 `-f <file-mask>`, `--file-mask <file-mask>` : Search in files with specific extension. Example: `".txt"`, `".js"`
 
 `-s <type>`, `--search-results <type>` : Type of search result. `"filePaths"`/`"lineNo"`. Default: filePaths
-
-> Paths should be absolute.
 
 ## Examples
 

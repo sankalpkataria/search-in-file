@@ -43,7 +43,7 @@ if (!program.textToSearch) {
 }
 
 const textToSearch = program.textToSearch;
-const paths = !program.path || !program.path.length ? [ __dirname ] : program.path;
+const paths = !program.path || !program.path.length ? [ process.cwd() ] : program.path;
 
 if (program.searchResults && program.searchResults !== "filePaths" && program.searchResults !== "lineNo") {
     console.log("Invalid value for argument '--search-results'");
@@ -63,6 +63,9 @@ const options = {
 };
 
 fileSearch(paths, textToSearch, options).then(res => {
+    if (!res.length) {
+        throw new Error("No results found.");
+    }
     if (program.searchResults === "lineNo") {
         res.forEach( r => {
             if (r.length) {
@@ -76,5 +79,5 @@ fileSearch(paths, textToSearch, options).then(res => {
         console.table(res);
     }
 }).catch(err => {
-    console.log(err);
+    console.log(err.message || err);
 });

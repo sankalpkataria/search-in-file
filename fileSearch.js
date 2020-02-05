@@ -1,5 +1,4 @@
 const { createReadStream } = require("fs");
-const { once } = require('events');
 const { createInterface } = require('readline');
 
 const search = (data, textToSearch, options) => {
@@ -26,24 +25,30 @@ const search = (data, textToSearch, options) => {
 };
 
 const searchLineByLine = (filePath, textToSearch, options) => {
-    const results = [];
-    const stream = createReadStream(filePath, {encoding: "utf-8"});
-    const lineReader = createInterface({
-        input: stream
-    });
+    return new Promise((resolve, reject) => {
+        const results = [];
+        const stream = createReadStream(filePath, {encoding: "utf-8"});
+        const lineReader = createInterface({
+            input: stream
+        });
 
-    let lineNo = 0;
+        let lineNo = 0;
 
-    lineReader.on('line', (line) => {
-        lineNo++;
-        if(search(line, textToSearch, options)) {
-            results.push({ filePath, line: line.trim(), lineNo });
-        }
-    });
+        lineReader.on('line', (line) => {
+            lineNo++;
+            if(search(line, textToSearch, options)) {
+                results.push({ filePath, line: line.trim(), lineNo });
+            }
+        });
 
-    return once(lineReader, 'close').then(function () {
-        stream.close();
-        return results;
+        lineReader.on('close', () => {
+            resolve(results);
+        });
+
+        lineReader.on('error', (err) => {
+            stream.close();
+            reject(err);
+        });
     });
 }
 

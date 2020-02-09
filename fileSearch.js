@@ -1,6 +1,14 @@
 const { createReadStream } = require("fs");
 const { createInterface } = require('readline');
 
+/**
+ * Method to search the given text in the given data.
+ *
+ * @param {string} data Data on which search will be performed.
+ * @param {string} textToSearch Text to search in file.
+ * @param {object} options Various options for file search.
+ * @returns {boolean} Returns true is text is present in given data. Else returns false
+ */
 const search = (data, textToSearch, options) => {
     if (!options || !(options instanceof Object)) {
         options = {};
@@ -24,6 +32,14 @@ const search = (data, textToSearch, options) => {
     }
 };
 
+/**
+ * Method to read the given file and search for the given text line by line.
+ *
+ * @param {string} filePath Path of the file to search.
+ * @param {string} textToSearch Text to search in file.
+ * @param {object} options Various options for file search.
+ * @returns {promise} Returns a promise that resolves with path of file, line and line number in which the given text is present.
+ */
 const searchLineByLine = (filePath, textToSearch, options) => {
     return new Promise((resolve, reject) => {
         const results = [];
@@ -52,6 +68,14 @@ const searchLineByLine = (filePath, textToSearch, options) => {
     });
 }
 
+/**
+ * Method to read the given file and search for the given text.
+ *
+ * @param {string} filePath Path of the file to search.
+ * @param {string} textToSearch Text to search in file.
+ * @param {object} options Various options for file search.
+ * @returns {promise} Returns a promise that resolves with path of file in which the given text is present.
+ */
 const readFileAndSearch = (filePath, textToSearch, options) => {
     return new Promise((resolve, reject) => {
         if (!options.searchResults || options.searchResults !== "lineNo") {

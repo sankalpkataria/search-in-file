@@ -1,10 +1,14 @@
+[![NPM](https://nodei.co/npm/search-in-file.png?downloads=true)](https://nodei.co/npm/search-in-file/)
+
+[![Package quality](http://packagequality.com/badge/search-in-file.png)](http://packagequality.com/#?package=search-in-file)
+
 # Search In File
 
 Includes utility methods and command to search text within file(s). 
 
 ## Installation
 ```
-npm install search-in-file
+npm install --save search-in-file
 ```
 
 ## Available Utility Methods

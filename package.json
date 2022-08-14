@@ -2,9 +2,11 @@
   "name": "search-in-file",
   "version": "1.2.2",
   "description": "Includes utility methods and command to search text within file(s).",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "lint": "tsc --noEmit && eslint \"src/**/*.ts\" --fix"
   },
   "bin": {
     "search-in-file": "./cli.js"
@@ -26,6 +28,10 @@
   },
   "homepage": "https://github.com/sankalpkataria/file-search#readme",
   "dependencies": {
-    "commander": "^4.1.0"
+    "commander": "^4.1.0",
+    "typescript": "^4.7.4"
+  },
+  "devDependencies": {
+    "@types/node": "^18.6.4"
   }
 }

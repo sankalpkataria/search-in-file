@@ -5,12 +5,12 @@ import { join } from 'path';
 // Using closure
 const getFiles = async (path: string, omitEmpty: boolean) => {
   const files: string[] = [];
-  const getFilesRecursively = async () => {
+  const getFilesRecursively = async (path: string) => {
     const fileList = await readdir(path);
     const fileStatPromises: any = fileList.map(function (file) {
       const filePath: string = join(path, file);
       return stat(filePath).then((fileStat: Stats): any => {
-        if (fileStat.isDirectory()) return getFilesRecursively();
+        if (fileStat.isDirectory()) return getFilesRecursively(filePath);
         if (omitEmpty) return fileStat.size > 0 ? filePath : '';
         return filePath;
       });
@@ -19,7 +19,7 @@ const getFiles = async (path: string, omitEmpty: boolean) => {
     const result = filesPaths.filter((file: string) => !!file);
     return files.concat(result);
   };
-  return getFilesRecursively();
+  return getFilesRecursively(path);
 };
 
 /**
@@ -27,7 +27,11 @@ const getFiles = async (path: string, omitEmpty: boolean) => {
  * @param {boolean} recursive Get files recursively from directory.
  * @param {boolean} omitEmpty A flag to omit empty files from result.
  */
-export const getFilesFromDir = (dirPath: string, recursive: boolean, omitEmpty: boolean) => {
+export const getFilesFromDir = (
+  dirPath: string,
+  recursive: boolean,
+  omitEmpty: boolean,
+) => {
   if (!recursive) {
     return readdir(dirPath).then((fileList) => {
       const fileStatPromises = fileList.map((file) => {

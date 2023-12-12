@@ -1,15 +1,25 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-import { LineResult } from './types';
+import { LineResult, SearchResults } from './types';
 import { fileSearch } from '.';
 
 function concatValues(value: string, previous: string[]) {
   return previous.concat([value]);
 }
 
-const program = new Command('search-in-file')
-  .version('2.2.2')
+const program: Command & {
+  textToSearch?: string;
+  path?: string[];
+  searchResults?: SearchResults;
+  fileMask?: string;
+  excludeDir?: string[];
+  word?: boolean;
+  ignoreCase?: boolean;
+  reg?: boolean;
+  recursive?: boolean;
+} = new Command('search-in-file')
+  .version('3.2.2')
   .arguments('<text-to-search>')
   .usage('<text-to-search> [options]')
   .action((text) => {
@@ -42,7 +52,6 @@ const program = new Command('search-in-file')
   .option(
     '-f, --file-mask <file-mask>',
     `Search in files with specific extension. Example: ".txt", ".js"`,
-    null,
   )
   .option(
     '-s, --search-results <type>',

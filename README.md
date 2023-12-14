@@ -57,7 +57,7 @@ npm install --save search-in-file
 - `ignoreCase`: Case in-sensitive search. Default `false`
 - `isRegex`: Searches for the regular expression. Default `false`
 - `ignoreDir`: Ignore the specified directories/path while searching. Default `[]`
-- `fileMask`: Only search in files with given extension. Default `null`
+- `fileMask`: Only search in files with given extension(s). Default `null`
 - `searchResults`: Type of search results to get. `lineNo` to get line with line number that contains given search text. Default `filePaths`
 
 ## Usage As command line tool

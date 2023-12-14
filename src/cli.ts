@@ -12,7 +12,7 @@ const program: Command & {
   textToSearch?: string;
   path?: string[];
   searchResults?: SearchResults;
-  fileMask?: string;
+  fileMask?: string | string[];
   excludeDir?: string[];
   word?: boolean;
   ignoreCase?: boolean;

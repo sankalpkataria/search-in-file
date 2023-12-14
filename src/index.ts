@@ -25,14 +25,14 @@ const fileSearch = async (
     const filePromises = paths.map((p) => access(p));
     await Promise.all(filePromises);
   } catch (error) {
-    throw new Error("One of the file path doesn't exists.") 
+    throw new Error("One of the file path doesn't exists.");
   }
 
   const getFilesPromises = paths.map((p) =>
     stat(p).then((stat) => {
       return !stat.isDirectory()
         ? [p]
-        : getFilesFromDir(p, options.recursive || false, true) as Promise<string[]>;
+        : (getFilesFromDir(p, options.recursive || false, true) as Promise<string[]>);
     }),
   );
 
@@ -53,12 +53,15 @@ const fileSearch = async (
     allFiles = allFiles.filter((filePath: string) => {
       const filePathParts = filePath.split('.');
       const fileExt = filePathParts[filePathParts.length - 1];
+      if (options.fileMask instanceof Array) {
+        return options.fileMask.some((fMask) => fileExt === fMask);
+      }
       return fileExt === options.fileMask;
     });
   }
 
   if (!allFiles.length) {
-    throw new Error("No file to search. Either there are no files or files are empty");
+    throw new Error('No file to search. Either there are no files or files are empty');
   }
 
   const promises = allFiles.map((path: string) =>
@@ -66,7 +69,7 @@ const fileSearch = async (
   );
 
   const searchResults = (await Promise.all(promises)) as (string[] | LineResult[])[];
-  return searchResults.filter((results : string[] | LineResult[]) => !!results.length);
+  return searchResults.filter((results: string[] | LineResult[]) => !!results.length);
 };
 
 export { fileSearch, search, getFilesFromDir };

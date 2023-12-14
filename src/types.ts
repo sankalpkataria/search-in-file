@@ -4,7 +4,7 @@ export type SearchOptions = {
     ignoreCase?: boolean;
     isRegex?: boolean;
     ignoreDir?: string[];
-    fileMask?: string;
+    fileMask?: string | string[];
     searchResults?: SearchResults;
 };
 

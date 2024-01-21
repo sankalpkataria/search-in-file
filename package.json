@@ -9,7 +9,7 @@
     "lint": "tsc --noEmit && eslint \"src/**/*.ts\" --fix"
   },
   "bin": {
-    "search-in-file": "./cli.js"
+    "search-in-file": "./dist/cli.js"
   },
   "repository": {
     "type": "git",

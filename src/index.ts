@@ -53,9 +53,6 @@ const fileSearch = async (
     allFiles = allFiles.filter((filePath: string) => {
       const filePathParts = filePath.split('.');
       const fileExt = filePathParts[filePathParts.length - 1];
-      if (options.fileMask instanceof Array) {
-        return options.fileMask.some((fMask) => fileExt === fMask);
-      }
       return fileExt === options.fileMask;
     });
   }

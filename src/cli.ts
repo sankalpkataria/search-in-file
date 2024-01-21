@@ -19,7 +19,7 @@ const program: Command & {
   reg?: boolean;
   recursive?: boolean;
 } = new Command('search-in-file')
-  .version('3.2.2')
+  .version('3.5.2')
   .arguments('<text-to-search>')
   .usage('<text-to-search> [options]')
   .action((text) => {
@@ -74,13 +74,10 @@ if (!program.textToSearch) {
 }
 
 const textToSearch = program.textToSearch;
-const paths = !program.path || !program.path.length ? [process.cwd()] : program.path;
+const searchResults = program.getOptionValue('searchResults');
+const paths = !program.getOptionValue('path')?.length ? [process.cwd()] : program.getOptionValue('path');
 
-if (
-  program.searchResults &&
-  program.searchResults !== 'filePaths' &&
-  program.searchResults !== 'lineNo'
-) {
+if (searchResults && searchResults !== 'filePaths' && searchResults !== 'lineNo') {
   console.log("Invalid value for argument '--search-results'");
   console.log();
   console.log(`Run search-in-file --help to see all options.`);
@@ -88,13 +85,13 @@ if (
 }
 
 const options = {
-  words: program.word,
-  ignoreCase: program.ignoreCase,
-  isRegex: program.reg,
-  recursive: program.recursive,
-  ignoreDir: program.excludeDir,
-  fileMask: program.fileMask,
-  searchResults: program.searchResults,
+  words: program.getOptionValue('word'),
+  ignoreCase: program.getOptionValue('ignoreCase'),
+  isRegex: program.getOptionValue('reg'),
+  recursive: program.getOptionValue('recursive'),
+  ignoreDir: program.getOptionValue('excludeDir'),
+  fileMask: program.getOptionValue('fileMask'),
+  searchResults: program.getOptionValue('searchResults'),
 };
 
 fileSearch(paths, textToSearch, options)
@@ -116,5 +113,5 @@ fileSearch(paths, textToSearch, options)
     }
   })
   .catch((err: Error) => {
-    console.log(err.message || err);
+    console.log(err);
   });

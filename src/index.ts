@@ -66,7 +66,7 @@ const fileSearch = async (
   );
 
   const searchResults = (await Promise.all(promises)) as (string[] | LineResult[])[];
-  return searchResults.filter((results: string[] | LineResult[]) => !!results.length);
+  return searchResults.filter((results: string[] | LineResult[]) => !!results?.length);
 };
 
 export { fileSearch, search, getFilesFromDir };

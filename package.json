@@ -1,6 +1,6 @@
 {
   "name": "search-in-file",
-  "version": "3.4.2",
+  "version": "3.5.2",
   "description": "Includes utility methods and command to search text within file(s).",
   "main": "dist/index.js",
   "types": "dist/index.d.js",
